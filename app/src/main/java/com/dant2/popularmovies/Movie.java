@@ -1,7 +1,7 @@
 package com.dant2.popularmovies;
 
 /**
- * Created by jl on 7/30/17.
+ * Model for movie objects
  */
 
 public class Movie {

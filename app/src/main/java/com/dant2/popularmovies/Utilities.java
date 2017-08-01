@@ -1,6 +1,6 @@
 package com.dant2.popularmovies;
 
-import android.net.Uri;
+
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -17,11 +17,10 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-import static android.R.id.input;
-
 public class Utilities {
+    //TODO: Properly handle exceptions
     //API key has been removed before uploading to GitHub
-    private final static String API_KEY = null;
+    private final static String API_KEY = "";
     private static URL fullMoviesURL = null;
     private static HttpURLConnection connection = null;
     public static String downloadMoviesAsJson(){
@@ -48,11 +47,11 @@ public class Utilities {
 
         }
         if( connection != null){
-            Log.v("tag", "made connection");
+            Log.v("Utilities", "Made connection");
             InputStream moviesResponse;
             try {
                 moviesResponse = connection.getInputStream();
-                listOfMovies = inputsteamToString(moviesResponse);
+                listOfMovies = inputStreamToString(moviesResponse);
 
             }
             catch ( IOException e){
@@ -61,13 +60,13 @@ public class Utilities {
 
         }
         else{
-            Log.v("tag", "didnt make connection");
+            Log.v("Utilities", "Failed to open connection");
         }
 
         return listOfMovies;
     }
 
-    private static String inputsteamToString(InputStream inputStream) throws IOException {
+    private static String inputStreamToString(InputStream inputStream) throws IOException {
 
         StringBuilder resultString = new StringBuilder();
         if(inputStream != null){
@@ -89,7 +88,7 @@ public class Utilities {
     }
 
     public static ArrayList<Movie> parseMoviesFromJSON(String jsonString){
-        JSONObject fullMovies = null;
+        JSONObject fullMovies;
         JSONArray individualMovies;
         ArrayList<Movie> movieArrayList = new ArrayList<Movie>();
         try {
