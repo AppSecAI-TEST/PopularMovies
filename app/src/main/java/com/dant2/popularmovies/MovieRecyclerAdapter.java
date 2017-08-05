@@ -1,11 +1,15 @@
-package com.dant2.popularmovies;
+ package com.dant2.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -38,9 +42,10 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         TextView descText = holder.mMovieDesc;
         TextView ratingText = holder.mMovieRating;
         TextView nameText = holder.mMovieName;
-
+        Picasso.with(imageView.getContext()).load("http://image.tmdb.org/t/p/w185/" + current.getPoster()).into(imageView);
         descText.setText(current.getPlotSummary());
         nameText.setText(current.getName());
+
 
 
     }
@@ -61,5 +66,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             mMovieName = v.findViewById(R.id.tv_movie_name);
             mMovieDesc = v.findViewById(R.id.tv_movie_description);
         }
+
+
     }
 }

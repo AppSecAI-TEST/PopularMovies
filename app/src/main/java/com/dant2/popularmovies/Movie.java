@@ -40,16 +40,27 @@ public class Movie {
 
     String name;
 
-    public Movie(String name, String releaseDate, String plotSummary, int rating) {
+    public Movie(String name, String releaseDate, String plotSummary, int rating, String poster) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.plotSummary = plotSummary;
         this.rating = rating;
+        this.poster = poster;
     }
 
     String releaseDate;
     String plotSummary;
     int rating;
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    String poster;
 
 
 

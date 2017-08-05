@@ -101,7 +101,9 @@ public class Utilities {
                 String releaseDate = currentMovie.getString("release_date");
                 String plotSummary = currentMovie.getString("overview");
                 int rating = currentMovie.getInt("vote_average");
-                movieArrayList.add(i,new Movie(name, releaseDate, plotSummary,rating));
+                String posterURL = currentMovie.getString("poster_path");
+                Log.v("parseMoviesFromJSON", posterURL);
+                movieArrayList.add(i,new Movie(name, releaseDate, plotSummary,rating, posterURL));
             }
         } catch (JSONException e) {
             Log.v("parseMoviesFromJSON", "failed to create JSON object");
