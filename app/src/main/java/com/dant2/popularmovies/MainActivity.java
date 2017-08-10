@@ -1,18 +1,30 @@
 package com.dant2.popularmovies;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieRecyclerAdapter.ListItemClickListener{
     private RecyclerView moviesView;
     private MovieRecyclerAdapter movieAdapter;
     private ArrayList<Movie> listOfMovies = new ArrayList<Movie>();
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +34,24 @@ public class MainActivity extends AppCompatActivity {
         moviesView = (RecyclerView) findViewById(R.id.rv_list_movies);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         moviesView.setLayoutManager(layoutManager);
-        movieAdapter = new MovieRecyclerAdapter(listOfMovies.size(),listOfMovies);
+        movieAdapter = new MovieRecyclerAdapter(listOfMovies.size(),listOfMovies, this);
         moviesView.setAdapter(movieAdapter);
-
+        //TODO: Give the user an indicator that they are offline instead of just giving a blank page.
         /*Download the list of Movies using loadMoviesFromWebTask*/
-        loadMoviesFromWebTask loadMovies = new loadMoviesFromWebTask();
-        loadMovies.execute();
+        if(isOnline()) {
+            loadMoviesFromWebTask loadMovies = new loadMoviesFromWebTask();
+            loadMovies.execute();
+        }
+    }
 
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        Movie movieItem = listOfMovies.get(clickedItemIndex);
+        Intent showDetails = new Intent(MainActivity.this, DetailActivity.class);
+        showDetails.putExtra("MOVIE_NAME", movieItem.getName());
+        showDetails.putExtra("MOVIE_SUMMARY",movieItem.getPlotSummary() );
+        showDetails.putExtra("MOVIE_IMAGE", movieItem.getPoster());
+        startActivity(showDetails);
     }
 
 
@@ -55,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
             Log.v("List of Movies", stringOfMovies);
             Log.d("Size of Movie arrayList", Integer.toString(listOfMovies.size()));
             //TODO: Figure out if there is a different way to do this.
-            movieAdapter = new MovieRecyclerAdapter(listOfMovies.size(),listOfMovies);
+            movieAdapter = new MovieRecyclerAdapter(listOfMovies.size(),listOfMovies, MainActivity.this);
             moviesView.setAdapter(movieAdapter);
         }
     }
+
 }

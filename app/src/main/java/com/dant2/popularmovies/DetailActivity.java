@@ -6,6 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -13,17 +17,18 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ImageView detailImage = (ImageView) findViewById(R.id.iv_detail_movie_image);
+        TextView detailName = (TextView) findViewById(R.id.tv_detail_name);
+        TextView detailSummary = (TextView) findViewById(R.id.tv_detail_summary);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            detailName.setText(extras.getString("MOVIE_NAME"));
+            detailSummary.setText(extras.getString("MOVIE_SUMMARY"));
+            Picasso.with(detailImage.getContext()).load("http://image.tmdb.org/t/p/w500/" + extras.getString("MOVIE_IMAGE")).into(detailImage);
+        }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
     }
 
 }

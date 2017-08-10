@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class Utilities {
     //TODO: Properly handle exceptions
     //API key has been removed before uploading to GitHub
-    private final static String API_KEY = "";
+    private final static String API_KEY = "bd0ec9a39d66c4b535d111fc22b9b4ea";
     private static URL fullMoviesURL = null;
     private static HttpURLConnection connection = null;
     public static String downloadMoviesAsJson(){

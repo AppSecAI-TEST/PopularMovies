@@ -20,12 +20,18 @@ import java.util.ArrayList;
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdapter.MovieViewHolder> {
     int mNumberOfItems;
     ArrayList<Movie> mMovies;
+    final private ListItemClickListener mOnClickListener;
+
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
 
 
-    public MovieRecyclerAdapter(int numberOfItems, ArrayList<Movie> movies){
+    public MovieRecyclerAdapter(int numberOfItems, ArrayList<Movie> movies, ListItemClickListener listener){
         //NumberOfItems should be the length of the ArrayList of Movies
         mNumberOfItems = numberOfItems;
         mMovies = movies;
+        mOnClickListener = listener;
     }
 
 
@@ -55,7 +61,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         return mNumberOfItems;
     }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder{
+    class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView mMoviePic;
         TextView mMovieName;
         TextView mMovieDesc;
@@ -65,8 +71,15 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             mMoviePic = v.findViewById(R.id.iv_movie_image);
             mMovieName = v.findViewById(R.id.tv_movie_name);
             mMovieDesc = v.findViewById(R.id.tv_movie_description);
+            v.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View view) {
+            int movieID = getAdapterPosition();
+            long movieID2 = getItemId();
+            mOnClickListener.onListItemClick(movieID);
+        }
     }
 }
