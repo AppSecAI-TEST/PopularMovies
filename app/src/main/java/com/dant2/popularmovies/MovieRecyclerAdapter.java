@@ -45,11 +45,9 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie current = mMovies.get(position);
         ImageView imageView = holder.mMoviePic;
-        TextView descText = holder.mMovieDesc;
         TextView ratingText = holder.mMovieRating;
         TextView nameText = holder.mMovieName;
         Picasso.with(imageView.getContext()).load("http://image.tmdb.org/t/p/w185/" + current.getPoster()).into(imageView);
-        descText.setText(current.getPlotSummary());
         nameText.setText(current.getName());
 
 
@@ -70,7 +68,6 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
             super(v);
             mMoviePic = v.findViewById(R.id.iv_movie_image);
             mMovieName = v.findViewById(R.id.tv_movie_name);
-            mMovieDesc = v.findViewById(R.id.tv_movie_description);
             v.setOnClickListener(this);
         }
 

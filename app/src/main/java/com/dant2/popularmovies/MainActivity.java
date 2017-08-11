@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MovieRecyclerAdap
         setContentView(R.layout.activity_main);
         /* Setup the RecyclerView */
         moviesView = (RecyclerView) findViewById(R.id.rv_list_movies);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new GridLayoutManager(this,2);
         moviesView.setLayoutManager(layoutManager);
         movieAdapter = new MovieRecyclerAdapter(listOfMovies.size(),listOfMovies, this);
         moviesView.setAdapter(movieAdapter);
